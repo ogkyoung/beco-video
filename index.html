@@ -1,0 +1,1072 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내손안의 환경선생님</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+<style>
+    :root {
+        --bg: #f4f8fb;
+        --card: #ffffff;
+        --line: #d6e4f0;
+        --text: #2c3e50;
+        --muted: #66788a;
+        --blue: #1e88e5;
+        --green: #43a047;
+        --orange: #fb8c00;
+        --blue-soft: #e3f2fd;
+        --shadow: 0 12px 32px rgba(31, 74, 125, 0.08);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Pretendard', sans-serif;
+        margin: 0;
+        background: var(--bg);
+        text-align: center;
+        color: var(--text);
+    }
+
+    header {
+        background: white;
+        padding: 25px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    header img {
+        height: 60px;
+        width: auto;
+    }
+
+    .container {
+        max-width: 480px;
+        margin: auto;
+        padding: 40px 20px 60px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        line-height: 1.4;
+        word-break: keep-all;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 40px;
+        line-height: 1.6;
+        word-break: keep-all;
+    }
+
+    .menu-btn {
+        width: 100%;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 15px;
+        border: none;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        font-family: inherit;
+    }
+
+    .menu-btn:active {
+        transform: scale(0.97);
+    }
+
+    .btn1 {
+        background: var(--green);
+        color: white;
+    }
+
+    .btn2 {
+        background: var(--orange);
+        color: white;
+    }
+
+    .btn3 {
+        background: var(--blue);
+        color: white;
+    }
+
+    .btn-question {
+        background: var(--blue-soft);
+        color: var(--blue);
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .view {
+        display: none;
+    }
+
+    .view.active {
+        display: block;
+    }
+
+    .video-box {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        margin-top: 20px;
+    }
+
+    .video-box video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border-radius: 15px;
+        background: #000;
+    }
+
+    .back-btn {
+        margin-top: 20px;
+        display: inline-block;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .input-box,
+    .select-box {
+        width: 100%;
+        margin-bottom: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        box-sizing: border-box;
+        font-family: 'Pretendard', sans-serif;
+        background: #fff;
+    }
+
+    .privacy-note {
+        margin: 10px 0 18px;
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.5;
+        word-break: keep-all;
+    }
+
+    .choice-group,
+    .question-meta {
+        margin-bottom: 16px;
+        text-align: left;
+    }
+
+    .choice-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    #contactFields {
+        display: block;
+    }
+
+    .upload-wrap {
+        margin-bottom: 16px;
+        text-align: left;
+    }
+
+    .upload-label {
+        display: inline-block;
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px dashed #9bbad3;
+        border-radius: 12px;
+        background: #f8fbfe;
+        cursor: pointer;
+    }
+
+    .upload-label input {
+        display: none;
+    }
+
+    .upload-file-name {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.4;
+        word-break: break-all;
+    }
+
+    .admin-wrap {
+        text-align: left;
+    }
+
+    .admin-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .admin-subtitle {
+        color: var(--muted);
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 18px 16px;
+        box-shadow: var(--shadow);
+    }
+
+    .metric-label {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 8px;
+    }
+
+    .metric-value {
+        font-size: 1.7rem;
+        font-weight: 800;
+    }
+
+    .section-card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 18px 16px;
+        box-shadow: var(--shadow);
+        margin-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .list-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #eef2f5;
+        font-size: 0.95rem;
+    }
+
+    .list-row:last-child {
+        border-bottom: none;
+    }
+
+    .bar-wrap {
+        flex: 1;
+        height: 8px;
+        background: #edf3f7;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--green), var(--blue));
+        border-radius: 999px;
+    }
+
+    .small {
+        font-size: 0.88rem;
+        color: var(--muted);
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #eef6ff;
+        color: var(--blue);
+        font-size: 0.82rem;
+        font-weight: 700;
+    }
+
+    .complaint-item {
+        padding: 14px 0;
+        border-bottom: 1px solid #eef2f5;
+    }
+
+    .complaint-item:last-child {
+        border-bottom: none;
+    }
+
+    .complaint-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 6px;
+    }
+
+    .complaint-title {
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    .complaint-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 8px 0;
+    }
+
+    .empty-state {
+        color: var(--muted);
+        line-height: 1.6;
+        padding: 8px 0 2px;
+    }
+
+    .dashboard-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .dashboard-actions .menu-btn {
+        margin-bottom: 0;
+        padding: 14px 12px;
+        font-size: 0.95rem;
+    }
+
+    .filter-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .filter-grid .input-box,
+    .filter-grid .select-box {
+        margin-bottom: 0;
+    }
+
+    .status-select {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #d3dde6;
+        font-family: inherit;
+        background: #fff;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.jpg" alt="부산환경공단" ondblclick="openAdminLogin()">
+</header>
+
+<div class="container">
+
+    <div id="home" class="view active">
+        <div class="title">내 손안의 환경선생님</div>
+        <div class="subtitle">부산환경공단을 쉽게 알아보세요</div>
+
+        <button class="menu-btn btn1" onclick="playVideo('대표홍보영상.mp4', '부산환경공단이 궁금해')">
+            부산환경공단이 궁금해
+        </button>
+
+        <button class="menu-btn btn2" onclick="playVideo('자원순환교육용영상.mp4', '소각시설')">
+            소각시설
+        </button>
+
+        <button class="menu-btn btn3" onclick="playVideo('하수처리교육용영상.mp4', '하수시설')">
+            하수시설
+        </button>
+
+        <button class="menu-btn btn-question" onclick="goQuestionPage()">
+            궁금해요
+        </button>
+    </div>
+
+    <div id="videoPage" class="view">
+        <h2 id="videoTitle"></h2>
+        <div class="video-box">
+            <video id="player" controls autoplay playsinline></video>
+        </div>
+        <div class="back-btn" onclick="goHome()">← 처음으로</div>
+    </div>
+
+    <div id="questionPage" class="view">
+        <h2>궁금해요</h2>
+
+        <div class="privacy-note">※ 개인정보는 답변을 위한 용도로만 사용됩니다.</div>
+
+        <div class="choice-group">
+            <label class="choice-option">
+                <input type="radio" name="replyType" value="reply" checked onchange="toggleContactFields()">
+                <span>답변 받기 원해요</span>
+            </label>
+            <label class="choice-option">
+                <input type="radio" name="replyType" value="opinion" onchange="toggleContactFields()">
+                <span>그냥 의견만 남길게요</span>
+            </label>
+        </div>
+
+        <div id="contactFields">
+            <input type="email" id="email" class="input-box" placeholder="이메일 입력">
+            <input type="tel" id="phone" class="input-box" placeholder="핸드폰 번호 입력">
+        </div>
+
+        <div class="question-meta">
+            <select id="facility" class="select-box">
+                <option value="">관련 시설 선택</option>
+                <option value="공단 일반">공단 일반</option>
+                <option value="소각시설">소각시설</option>
+                <option value="하수시설">하수시설</option>
+                <option value="기타">기타</option>
+            </select>
+        </div>
+
+        <textarea id="question" class="input-box" placeholder="궁금한 내용을 작성해주세요" style="height: 120px;"></textarea>
+
+        <div class="upload-wrap">
+            <label class="upload-label">
+                사진 첨부하기
+                <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="showSelectedFileName()">
+            </label>
+            <div id="fileName" class="upload-file-name">선택된 사진이 없습니다.</div>
+        </div>
+
+        <button class="menu-btn btn1" onclick="submitQuestion()">제출하기</button>
+
+        <div class="back-btn" onclick="goHomeFromQuestion()">← 처음으로</div>
+    </div>
+
+    <div id="dashboardPage" class="view">
+        <div class="admin-wrap">
+            <div class="admin-title">관리자 대시보드</div>
+            <div class="admin-subtitle">
+                접수된 민원을 저장하고, 지역별·시간대별·민원 종류별로 자동 분류해 선제 대응에 활용하는 화면입니다.
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="metric-label">누적 접수</div>
+                    <div id="metricTotal" class="metric-value">0</div>
+                </div>
+                <div class="card">
+                    <div class="metric-label">오늘 접수</div>
+                    <div id="metricToday" class="metric-value">0</div>
+                </div>
+                <div class="card">
+                    <div class="metric-label">고위험 건수</div>
+                    <div id="metricHighRisk" class="metric-value">0</div>
+                </div>
+                <div class="card">
+                    <div class="metric-label">답변 요청</div>
+                    <div id="metricNeedReply" class="metric-value">0</div>
+                </div>
+            </div>
+
+            <div class="dashboard-actions">
+                <button class="menu-btn btn-admin" onclick="seedSampleData()">샘플 데이터 생성</button>
+                <button class="menu-btn btn-question" onclick="downloadCsv()">CSV 내보내기</button>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">민원 검색 및 필터</div>
+                <div class="filter-grid">
+                    <input id="searchInput" class="input-box" placeholder="내용 검색" oninput="renderDashboard()">
+                    <select id="filterStatus" class="select-box" onchange="renderDashboard()">
+                        <option value="">처리상태 전체</option>
+                        <option value="접수">접수</option>
+                        <option value="검토중">검토중</option>
+                        <option value="완료">완료</option>
+                    </select>
+                    <select id="filterType" class="select-box" onchange="renderDashboard()">
+                        <option value="">민원유형 전체</option>
+                        <option value="악취/대기">악취/대기</option>
+                        <option value="소음/진동">소음/진동</option>
+                        <option value="하수/수질">하수/수질</option>
+                        <option value="폐기물/소각">폐기물/소각</option>
+                        <option value="안전/위험">안전/위험</option>
+                        <option value="일반 문의">일반 문의</option>
+                    </select>
+                    <select id="filterRegion" class="select-box" onchange="renderDashboard()">
+                        <option value="">지역 전체</option>
+                        <option value="북부권">북부권</option>
+                        <option value="서부권">서부권</option>
+                        <option value="동부권">동부권</option>
+                        <option value="남부권">남부권</option>
+                        <option value="위치 미확인">위치 미확인</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">AI 선제 대응 제안</div>
+                <div id="insightList" class="empty-state">데이터가 쌓이면 자동으로 대응 제안이 표시됩니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">지역별 민원 분포</div>
+                <div id="regionStats" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">시간대별 민원 분포</div>
+                <div id="timeStats" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">민원 종류별 분류</div>
+                <div id="typeStats" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">최근 접수 내역</div>
+                <div id="complaintList" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+        </div>
+
+        <button class="menu-btn btn-question" onclick="clearDemoData()">
+            샘플 데이터 초기화
+        </button>
+
+        <div class="back-btn" onclick="goHome()">← 처음으로</div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://epzhgavlxixtjbbmaxt.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwemhoZ2F2bHhpeHRqYmJtYXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2NTE3OTEsImV4cCI6MjA5MjIyNzc5MX0.a2B5S4rdWu9bszoGr6WytyT3JkYpLru85FydaltBfz0';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const ADMIN_PASSWORD = '1234';
+let globalComplaints = [];
+
+function switchView(viewId) {
+    document.querySelectorAll('.view').forEach((view) => {
+        view.classList.remove('active');
+    });
+    document.getElementById(viewId).classList.add('active');
+}
+
+function playVideo(file, title) {
+    switchView('videoPage');
+    const player = document.getElementById('player');
+    player.src = file;
+    player.play();
+    document.getElementById('videoTitle').innerText = title;
+}
+
+function goHome() {
+    switchView('home');
+    const player = document.getElementById('player');
+    player.pause();
+    player.src = '';
+}
+
+function goQuestionPage() {
+    switchView('questionPage');
+}
+
+function goHomeFromQuestion() {
+    switchView('home');
+}
+
+async function goDashboard() {
+    await refreshDashboard();
+    switchView('dashboardPage');
+}
+
+function openAdminLogin() {
+    const password = prompt('愿由ъ옄 鍮꾨?踰덊샇瑜??낅젰?댁＜?몄슂.');
+    if (password === null) return;
+    if (password === ADMIN_PASSWORD) {
+        goDashboard();
+    } else {
+        alert('鍮꾨?踰덊샇媛 ?щ컮瑜댁? ?딆뒿?덈떎.');
+    }
+}
+
+function toggleContactFields() {
+    const selected = document.querySelector('input[name="replyType"]:checked');
+    const contactFields = document.getElementById('contactFields');
+    contactFields.style.display = selected.value === 'reply' ? 'block' : 'none';
+}
+
+function showSelectedFileName() {
+    const file = document.getElementById('photoInput').files[0];
+    document.getElementById('fileName').innerText = file ? '泥⑤????ъ쭊: ' + file.name : '?좏깮???ъ쭊???놁뒿?덈떎.';
+}
+
+// 1) DB ?곕룞
+async function getComplaints() {
+    const { data, error } = await supabase
+        .from('complaints')
+        .select('*')
+        .order('createdAt', { ascending: false });
+
+    if (error) {
+        console.error('Supabase fetch error:', error);
+        return [];
+    }
+    return data || [];
+}
+
+// 2) AI 遺꾨쪟 洹쒖튃
+function getTimeBand(dateValue) {
+    const hour = new Date(dateValue).getHours();
+    if (hour >= 5 && hour < 9) return '?대Ⅸ ?꾩묠';
+    if (hour >= 9 && hour < 12) return '?ㅼ쟾';
+    if (hour >= 12 && hour < 18) return '?ㅽ썑';
+    if (hour >= 18 && hour < 22) return '???;
+    return '?ъ빞';
+}
+
+function inferRegion(lat, lng) {
+    if (lat == null || lng == null) return '?꾩튂 誘명솗??;
+    if (lat > 35.23 && lng < 129.05) return '遺곷?沅?;
+    if (lat > 35.14 && lng < 129.09) return '?쒕?沅?;
+    if (lat > 35.14 && lng >= 129.09) return '?숇?沅?;
+    return '?⑤?沅?;
+}
+
+function classifyComplaintType(text, facility) {
+    const content = (text + ' ' + facility).toLowerCase();
+    if (content.includes('?꾩깉') || content.includes('?낆랬') || content.includes('留ㅼ뿰')) return '?낆랬/?湲?;
+    if (content.includes('?뚯쓬') || content.includes('?쒕걚') || content.includes('吏꾨룞')) return '?뚯쓬/吏꾨룞';
+    if (content.includes('?섏닔') || content.includes('?ㅼ닔') || content.includes('諛⑸쪟') || content.includes('臾?)) return '?섏닔/?섏쭏';
+    if (content.includes('?곕젅湲?) || content.includes('?먭린臾?) || content.includes('?뚭컖') || content.includes('?ы솢??)) return '?먭린臾??뚭컖';
+    if (content.includes('?덉쟾') || content.includes('?꾪뿕') || content.includes('遺덉븞') || content.includes('?붿옱')) return '?덉쟾/?꾪뿕';
+    return '?쇰컲 臾몄쓽';
+}
+
+function evaluateRisk(type, text) {
+    const content = text.toLowerCase();
+    if (type === '?덉쟾/?꾪뿕') return '?믪쓬';
+    if (content.includes('湲닿툒') || content.includes('?ш컖') || content.includes('利됱떆') || content.includes('?꾪뿕')) return '?믪쓬';
+    if (type === '?낆랬/?湲? || type === '?섏닔/?섏쭏') return '以묎컙';
+    return '蹂댄넻';
+}
+
+// 3) AI ?좎젣 ???臾멸뎄
+function buildInsightText(complaints) {
+    if (!complaints.length) {
+        return [];
+    }
+
+    const regionCounts = countBy(complaints, 'region');
+    const timeCounts = countBy(complaints, 'timeBand');
+    const typeCounts = countBy(complaints, 'complaintType');
+
+    const topRegion = getTopEntry(regionCounts);
+    const topTime = getTopEntry(timeCounts);
+    const topType = getTopEntry(typeCounts);
+    const insights = [];
+
+    if (topRegion) {
+        insights.push(topRegion.key + '?먯꽌 誘쇱썝??媛??留롮씠 ?묒닔?섍퀬 ?덉뼱 ?대떦 沅뚯뿭 ?꾩옣 ?먭????곗꽑 寃?좏븯?몄슂.');
+    }
+    if (topTime) {
+        insights.push(topTime.key + ' ?쒓컙? ?묒닔媛 吏묒쨷?섏뼱 ?쒖같怨?紐⑤땲?곕쭅 ?몃젰??洹??쒓컙???좊같移섑븯??寃껋씠 醫뗭뒿?덈떎.');
+    }
+    if (topType) {
+        insights.push(topType.key + ' ?좏삎??媛??留롮븘 愿???덈궡臾? ?ъ쟾 ?뺣퉬, 二쇰? 怨듭?瑜?媛뺥솕???꾩슂媛 ?덉뒿?덈떎.');
+    }
+
+    const highRisk = complaints.filter((item) => item.riskLevel === '?믪쓬').length;
+    if (highRisk > 0) {
+        insights.push('怨좎쐞??誘쇱썝??' + highRisk + '嫄??덉뼱 利됱떆 ???紐⑸줉?쇰줈 蹂꾨룄 愿由ш? ?꾩슂?⑸땲??');
+    }
+
+    return insights;
+}
+
+function countBy(items, key) {
+    return items.reduce((acc, item) => {
+        const value = item[key] || '誘몃텇瑜?;
+        acc[value] = (acc[value] || 0) + 1;
+        return acc;
+    }, {});
+}
+
+function filterComplaints(items) {
+    const keyword = document.getElementById('searchInput') ? document.getElementById('searchInput').value.trim().toLowerCase() : '';
+    const status = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : '';
+    const type = document.getElementById('filterType') ? document.getElementById('filterType').value : '';
+    const region = document.getElementById('filterRegion') ? document.getElementById('filterRegion').value : '';
+
+    return items.filter((item) => {
+        const matchKeyword = !keyword || [item.question, item.facility, item.complaintType].join(' ').toLowerCase().includes(keyword);
+        const matchStatus = !status || item.status === status;
+        const matchType = !type || item.complaintType === type;
+        const matchRegion = !region || item.region === region;
+        return matchKeyword && matchStatus && matchType && matchRegion;
+    });
+}
+
+function getTopEntry(counts) {
+    const entries = Object.entries(counts);
+    if (!entries.length) return null;
+    entries.sort((a, b) => b[1] - a[1]);
+    return { key: entries[0][0], count: entries[0][1] };
+}
+
+function formatDateTime(dateValue) {
+    const date = new Date(dateValue);
+    return date.toLocaleString('ko-KR');
+}
+
+function toPercent(value, total) {
+    if (!total) return 0;
+    return Math.round((value / total) * 100);
+}
+
+function renderStatRows(targetId, counts) {
+    const container = document.getElementById(targetId);
+    const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const total = entries.reduce((sum, item) => sum + item[1], 0);
+
+    if (!entries.length) {
+        container.innerHTML = '<div class="empty-state">?꾩쭅 ?묒닔??誘쇱썝???놁뒿?덈떎.</div>';
+        return;
+    }
+
+    container.innerHTML = entries.map(([label, value]) => {
+        const percent = toPercent(value, total);
+        return `
+            <div class="list-row">
+                <div style="min-width: 82px;">${label}</div>
+                <div class="bar-wrap"><div class="bar" style="width: ${percent}%"></div></div>
+                <div>${value}嫄?/div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderInsights(complaints) {
+    const insightList = document.getElementById('insightList');
+    const insights = buildInsightText(complaints);
+
+    if (!insights.length) {
+        insightList.innerHTML = '?곗씠?곌? ?볦씠硫??먮룞?쇰줈 ????쒖븞???쒖떆?⑸땲??';
+        return;
+    }
+
+    insightList.innerHTML = insights.map((item) => `<div class="list-row"><div>${item}</div></div>`).join('');
+}
+
+function renderComplaintList(complaints) {
+    const container = document.getElementById('complaintList');
+
+    if (!complaints.length) {
+        container.innerHTML = '<div class="empty-state">?꾩쭅 ?묒닔??誘쇱썝???놁뒿?덈떎.</div>';
+        return;
+    }
+
+    container.innerHTML = complaints.slice().reverse().slice(0, 10).map((item) => `
+        <div class="complaint-item">
+            <div class="complaint-head">
+                <div class="complaint-title">${item.complaintType}</div>
+                <div class="tag">${item.riskLevel}</div>
+            </div>
+            <div class="small">${formatDateTime(item.createdAt)} 쨌 ${item.region} 쨌 ${item.timeBand}</div>
+            <div class="complaint-meta">
+                <span class="tag">${item.facility || '?쒖꽕 誘몄???}</span>
+                <span class="tag">${item.replyType === 'reply' ? '?듬? ?붿껌' : '?섍껄 ?묒닔'}</span>
+                <span class="tag">${item.photoName ? '?ъ쭊 泥⑤?' : '?ъ쭊 ?놁쓬'}</span>
+                <span class="tag">${item.status || '?묒닔'}</span>
+            </div>
+            <div>${item.question || item.content}</div>
+            <select class="status-select" onchange="updateComplaintStatus('${item.id}', this.value)">
+                <option value="?묒닔" ${item.status === '?묒닔' ? 'selected' : ''}>泥섎━?곹깭: ?묒닔</option>
+                <option value="寃?좎쨷" ${item.status === '寃?좎쨷' ? 'selected' : ''}>泥섎━?곹깭: 寃?좎쨷</option>
+                <option value="?꾨즺" ${item.status === '?꾨즺' ? 'selected' : ''}>泥섎━?곹깭: ?꾨즺</option>
+            </select>
+        </div>
+    `).join('');
+}
+
+async function refreshDashboard() {
+    globalComplaints = await getComplaints();
+    renderDashboard();
+}
+
+function renderDashboard() {
+    const complaints = globalComplaints;
+    const filteredComplaints = filterComplaints(complaints);
+    const today = new Date().toDateString();
+
+    document.getElementById('metricTotal').innerText = complaints.length;
+    document.getElementById('metricToday').innerText = complaints.filter((item) => new Date(item.createdAt).toDateString() === today).length;
+    document.getElementById('metricHighRisk').innerText = complaints.filter((item) => item.riskLevel === '?믪쓬').length;
+    document.getElementById('metricNeedReply').innerText = complaints.filter((item) => item.replyType === 'reply').length;
+
+    renderInsights(filteredComplaints);
+    renderStatRows('regionStats', countBy(filteredComplaints, 'region'));
+    renderStatRows('timeStats', countBy(filteredComplaints, 'timeBand'));
+    renderStatRows('typeStats', countBy(filteredComplaints, 'complaintType'));
+    renderComplaintList(filteredComplaints);
+}
+
+function resetQuestionForm() {
+    document.querySelector('input[name="replyType"][value="reply"]').checked = true;
+    document.getElementById('email').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('facility').value = '';
+    document.getElementById('question').value = '';
+    document.getElementById('photoInput').value = '';
+    document.getElementById('fileName').innerText = '?좏깮???ъ쭊???놁뒿?덈떎.';
+    toggleContactFields();
+}
+
+function submitQuestion() {
+    const replyType = document.querySelector('input[name="replyType"]:checked').value;
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const facility = document.getElementById('facility').value;
+    const question = document.getElementById('question').value.trim();
+    const photoInput = document.getElementById('photoInput');
+    const photoName = photoInput.files[0] ? photoInput.files[0].name : '';
+
+    if (!question) {
+        alert('?댁슜???낅젰?댁＜?몄슂.');
+        return;
+    }
+
+    if (replyType === 'reply' && !email && !phone) {
+        alert('?대찓???먮뒗 ?몃뱶??踰덊샇瑜??낅젰?댁＜?몄슂.');
+        return;
+    }
+
+    async function completeSubmit(lat = null, lng = null) {
+        const createdAt = new Date().toISOString();
+        const complaintType = classifyComplaintType(question, facility);
+        const item = {
+            replyType,
+            email,
+            phone,
+            facility,
+            question,
+            content: question, 
+            photoName,
+            lat,
+            lng,
+            region: inferRegion(lat, lng),
+            timeBand: getTimeBand(createdAt),
+            complaintType,
+            riskLevel: evaluateRisk(complaintType, question),
+            status: '?묒닔',
+            createdAt
+        };
+
+        const { error } = await supabase.from('complaints').insert([item]);
+        if (error) {
+            console.error('Insert error:', error);
+            alert('?곗씠?????以??ㅻ쪟媛 諛쒖깮?덉뒿?덈떎.\n?먮윭 ?댁슜: ' + error.message);
+            return;
+        }
+
+        resetQuestionForm();
+        await refreshDashboard();
+        alert('?묒닔?섏뿀?듬땲?? 愿由ъ옄 ??쒕낫?쒖뿉 諛섏쁺?섏뿀?듬땲??');
+        switchView('dashboardPage');
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                completeSubmit(pos.coords.latitude, pos.coords.longitude);
+            },
+            () => {
+                alert('?꾩튂 ?뺣낫瑜?媛?몄삱 ???놁뼱 ?꾩튂 ?놁씠 ?묒닔?⑸땲??');
+                completeSubmit();
+            }
+        );
+    } else {
+        completeSubmit();
+    }
+}
+
+async function updateComplaintStatus(id, status) {
+    const { error } = await supabase
+        .from('complaints')
+        .update({ status })
+        .eq('id', id);
+
+    if (error) {
+        console.error('Update error:', error);
+        alert('?곹깭 ?낅뜲?댄듃 以??ㅻ쪟媛 諛쒖깮?덉뒿?덈떎.');
+        return;
+    }
+    await refreshDashboard();
+}
+
+async function seedSampleData() {
+    const now = Date.now();
+    const sampleItems = [
+        {
+            replyType: 'reply',
+            email: 'sample1@becco.kr',
+            phone: '010-1111-2222',
+            facility: '?뚭컖?쒖꽕',
+            question: '????쒓컙???뚭컖?쒖꽕 二쇰??먯꽌 ?낆랬媛 ?ы븯寃??⑸땲??',
+            content: '????쒓컙???뚭컖?쒖꽕 二쇰??먯꽌 ?낆랬媛 ?ы븯寃??⑸땲??',
+            photoName: 'odor.jpg',
+            lat: 35.20,
+            lng: 129.03,
+            region: '?쒕?沅?,
+            timeBand: '???,
+            complaintType: '?낆랬/?湲?,
+            riskLevel: '以묎컙',
+            status: '?묒닔',
+            createdAt: new Date(now - 1000 * 60 * 60 * 2).toISOString()
+        },
+        {
+            replyType: 'opinion',
+            email: '',
+            phone: '',
+            facility: '?섏닔?쒖꽕',
+            question: '?섏닔泥섎━??洹쇱쿂 諛곗닔濡?臾쇱깋???곹빐 蹂댁뿬 ?뺤씤???꾩슂?⑸땲??',
+            content: '?섏닔泥섎━??洹쇱쿂 諛곗닔濡?臾쇱깋???곹빐 蹂댁뿬 ?뺤씤???꾩슂?⑸땲??',
+            photoName: 'water.png',
+            lat: 35.16,
+            lng: 129.11,
+            region: '?숇?沅?,
+            timeBand: '?ㅽ썑',
+            complaintType: '?섏닔/?섏쭏',
+            riskLevel: '以묎컙',
+            status: '寃?좎쨷',
+            createdAt: new Date(now - 1000 * 60 * 60 * 8).toISOString()
+        },
+        {
+            replyType: 'reply',
+            email: '',
+            phone: '010-3333-4444',
+            facility: '怨듬떒 ?쇰컲',
+            question: '?쒖꽕 二쇰??먯꽌 ???뚯쓬怨?吏꾨룞??諛섎났?곸쑝濡?諛쒖깮?⑸땲??',
+            content: '?쒖꽕 二쇰??먯꽌 ???뚯쓬怨?吏꾨룞??諛섎났?곸쑝濡?諛쒖깮?⑸땲??',
+            photoName: '',
+            lat: 35.25,
+            lng: 129.02,
+            region: '遺곷?沅?,
+            timeBand: '?ъ빞',
+            complaintType: '?뚯쓬/吏꾨룞',
+            riskLevel: '蹂댄넻',
+            status: '?꾨즺',
+            createdAt: new Date(now - 1000 * 60 * 60 * 16).toISOString()
+        },
+        {
+            replyType: 'reply',
+            email: 'sample4@becco.kr',
+            phone: '',
+            facility: '?뚭컖?쒖꽕',
+            question: '?붿옱 ?꾪뿕???덉뼱 蹂댁씠???곌린媛 蹂댁뿬 湲닿툒 ?뺤씤 諛붾엻?덈떎.',
+            content: '?붿옱 ?꾪뿕???덉뼱 蹂댁씠???곌린媛 蹂댁뿬 湲닿툒 ?뺤씤 諛붾엻?덈떎.',
+            photoName: 'smoke.jpg',
+            lat: 35.13,
+            lng: 129.08,
+            region: '?⑤?沅?,
+            timeBand: '?ㅼ쟾',
+            complaintType: '?덉쟾/?꾪뿕',
+            riskLevel: '?믪쓬',
+            status: '?묒닔',
+            createdAt: new Date(now - 1000 * 60 * 30).toISOString()
+        }
+    ];
+
+    const { error } = await supabase.from('complaints').insert(sampleItems);
+    if (error) {
+        console.error('Seed error:', error);
+        alert('?섑뵆 ?곗씠???앹꽦 以??ㅻ쪟媛 諛쒖깮?덉뒿?덈떎.\n?먮윭: ' + error.message);
+        return;
+    }
+    await refreshDashboard();
+    switchView('dashboardPage');
+    alert('?섑뵆 ?곗씠?곌? ?앹꽦?섏뿀?듬땲??');
+}
+
+function downloadCsv() {
+    const complaints = globalComplaints;
+    if (!complaints.length) {
+        alert('?대낫???곗씠?곌? ?놁뒿?덈떎.');
+        return;
+    }
+
+    const rows = [
+        ['id', 'createdAt', 'status', 'replyType', 'facility', 'complaintType', 'riskLevel', 'region', 'timeBand', 'question', 'email', 'phone', 'photoName']
+    ];
+
+    complaints.forEach((item) => {
+        rows.push([
+            item.id,
+            item.createdAt,
+            item.status || '?묒닔',
+            item.replyType,
+            item.facility || '',
+            item.complaintType,
+            item.riskLevel,
+            item.region,
+            item.timeBand,
+            item.question || item.content,
+            item.email || '',
+            item.phone || '',
+            item.photoName || ''
+        ]);
+    });
+
+    const csvContent = rows.map((row) =>
+        row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(',')
+    ).join('\n');
+
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = '誘쇱썝??쒕낫???곗씠??csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+async function clearDemoData() {
+    if (!confirm('紐⑤뱺 ?곗씠?곕? ??젣?섏떆寃좎뒿?덇퉴?')) return;
+    const { error } = await supabase.from('complaints').delete().neq('id', -1);
+    if (error) {
+        console.error('Delete error:', error);
+        alert('珥덇린??以??ㅻ쪟媛 諛쒖깮?덉뒿?덈떎.\n?먮윭: ' + error.message);
+        return;
+    }
+    await refreshDashboard();
+    alert('??λ맂 誘쇱썝 ?곗씠?곌? 珥덇린?붾릺?덉뒿?덈떎.');
+}
+
+toggleContactFields();
+refreshDashboard();
+</script>
+</body>
+</html>
