@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내손안의 환경선생님</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+<style>
+    :root {
+        --bg: #f4f8fb;
+        --card: #ffffff;
+        --line: #d6e4f0;
+        --text: #2c3e50;
+        --muted: #66788a;
+        --blue: #1e88e5;
+        --green: #43a047;
+        --orange: #fb8c00;
+        --blue-soft: #e3f2fd;
+        --shadow: 0 12px 32px rgba(31, 74, 125, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Pretendard', sans-serif;
+        margin: 0;
+        background: var(--bg);
+        text-align: center;
+        color: var(--text);
+    }
+
+    header {
+        background: white;
+        padding: 25px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    header img {
+        height: 60px;
+        width: auto;
+    }
+
+    .container {
+        max-width: 480px;
+        margin: auto;
+        padding: 40px 20px 60px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        line-height: 1.4;
+        word-break: keep-all;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 40px;
+        line-height: 1.6;
+        word-break: keep-all;
+    }
+
+    .menu-btn {
+        width: 100%;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 15px;
+        border: none;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        font-family: inherit;
+    }
+
+    .menu-btn:active {
+        transform: scale(0.97);
+    }
+
+    .btn1 {
+        background: var(--green);
+        color: white;
+    }
+
+    .btn2 {
+        background: var(--orange);
+        color: white;
+    }
+
+    .btn3 {
+        background: var(--blue);
+        color: white;
+    }
+
+    .btn-question {
+        background: var(--blue-soft);
+        color: var(--blue);
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .view {
+        display: none;
+    }
+
+    .view.active {
+        display: block;
+    }
+
+    .video-box {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        margin-top: 20px;
+    }
+
+    .video-box video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border-radius: 15px;
+        background: #000;
+    }
+
+    .back-btn {
+        margin-top: 20px;
+        display: inline-block;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .input-box,
+    .select-box {
+        width: 100%;
+        margin-bottom: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        box-sizing: border-box;
+        font-family: 'Pretendard', sans-serif;
+        background: #fff;
+    }
+
+    .privacy-note {
+        margin: 10px 0 18px;
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.5;
+        word-break: keep-all;
+    }
+
+    .choice-group,
+    .question-meta {
+        margin-bottom: 16px;
+        text-align: left;
+    }
+
+    .choice-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    #contactFields {
+        display: block;
+    }
+
+    .upload-wrap {
+        margin-bottom: 16px;
+        text-align: left;
+    }
+
+    .upload-label {
+        display: inline-block;
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px dashed #9bbad3;
+        border-radius: 12px;
+        background: #f8fbfe;
+        cursor: pointer;
+    }
+
+    .upload-label input {
+        display: none;
+    }
+
+    .upload-file-name {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.4;
+        word-break: break-all;
+    }
+
+    .admin-wrap {
+        text-align: left;
+    }
+
+    .admin-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .admin-subtitle {
+        color: var(--muted);
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 18px 16px;
+        box-shadow: var(--shadow);
+    }
+
+    .metric-label {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 8px;
+    }
+
+    .metric-value {
+        font-size: 1.7rem;
+        font-weight: 800;
+    }
+
+    .section-card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 18px 16px;
+        box-shadow: var(--shadow);
+        margin-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .list-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #eef2f5;
+        font-size: 0.95rem;
+    }
+
+    .list-row:last-child {
+        border-bottom: none;
+    }
+
+    .bar-wrap {
+        flex: 1;
+        height: 8px;
+        background: #edf3f7;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--green), var(--blue));
+        border-radius: 999px;
+    }
+
+    .small {
+        font-size: 0.88rem;
+        color: var(--muted);
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #eef6ff;
+        color: var(--blue);
+        font-size: 0.82rem;
+        font-weight: 700;
+    }
+
+    .complaint-item {
+        padding: 14px 0;
+        border-bottom: 1px solid #eef2f5;
+    }
+
+    .complaint-item:last-child {
+        border-bottom: none;
+    }
+
+    .complaint-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 6px;
+    }
+
+    .complaint-title {
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    .complaint-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 8px 0;
+    }
+
+    .empty-state {
+        color: var(--muted);
+        line-height: 1.6;
+        padding: 8px 0 2px;
+    }
+
+    .dashboard-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .dashboard-actions .menu-btn {
+        margin-bottom: 0;
+        padding: 14px 12px;
+        font-size: 0.95rem;
+    }
+
+    .filter-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .filter-grid .input-box,
+    .filter-grid .select-box {
+        margin-bottom: 0;
+    }
+
+    .status-select {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #d3dde6;
+        font-family: inherit;
+        background: #fff;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.jpg" alt="부산환경공단" ondblclick="openAdminLogin()">
+</header>
+
+<div class="container">
+
+    <div id="home" class="view active">
+        <div class="title">내 손안의 환경선생님</div>
+        <div class="subtitle">부산환경공단을 쉽게 알아보세요</div>
+
+        <button class="menu-btn btn1" onclick="playVideo('대표홍보영상.mp4', '부산환경공단이 궁금해')">
+            부산환경공단이 궁금해
+        </button>
+
+        <button class="menu-btn btn2" onclick="playVideo('자원순환교육용영상.mp4', '소각시설')">
+            소각시설
+        </button>
+
+        <button class="menu-btn btn3" onclick="playVideo('하수처리교육용영상.mp4', '하수시설')">
+            하수시설
+        </button>
+
+        <button class="menu-btn btn-question" onclick="goQuestionPage()">
+            궁금해요
+        </button>
+    </div>
+
+    <div id="videoPage" class="view">
+        <h2 id="videoTitle"></h2>
+        <div class="video-box">
+            <video id="player" controls autoplay playsinline></video>
+        </div>
+        <div class="back-btn" onclick="goHome()">← 처음으로</div>
+    </div>
+
+    <div id="questionPage" class="view">
+        <h2>궁금해요</h2>
+
+        <div class="privacy-note">※ 개인정보는 답변을 위한 용도로만 사용됩니다.</div>
+
+        <div class="choice-group">
+            <label class="choice-option">
+                <input type="radio" name="replyType" value="reply" checked onchange="toggleContactFields()">
+                <span>답변 받기 원해요</span>
+            </label>
+            <label class="choice-option">
+                <input type="radio" name="replyType" value="opinion" onchange="toggleContactFields()">
+                <span>그냥 의견만 남길게요</span>
+            </label>
+        </div>
+
+        <div id="contactFields">
+            <input type="email" id="email" class="input-box" placeholder="이메일 입력">
+            <input type="tel" id="phone" class="input-box" placeholder="핸드폰 번호 입력">
+        </div>
+
+        <div class="question-meta">
+            <select id="facility" class="select-box">
+                <option value="">관련 시설 선택</option>
+                <option value="공단 일반">공단 일반</option>
+                <option value="소각시설">소각시설</option>
+                <option value="하수시설">하수시설</option>
+                <option value="기타">기타</option>
+            </select>
+        </div>
+
+        <textarea id="question" class="input-box" placeholder="궁금한 내용을 작성해주세요" style="height: 120px;"></textarea>
+
+        <div class="upload-wrap">
+            <label class="upload-label">
+                사진 첨부하기
+                <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="showSelectedFileName()">
+            </label>
+            <div id="fileName" class="upload-file-name">선택된 사진이 없습니다.</div>
+        </div>
+
+        <button class="menu-btn btn1" onclick="submitQuestion()">제출하기</button>
+
+        <div class="back-btn" onclick="goHomeFromQuestion()">← 처음으로</div>
+    </div>
+
+    <div id="dashboardPage" class="view">
+        <div class="admin-wrap">
+            <div class="admin-title">관리자 대시보드</div>
+            <div class="admin-subtitle">
+                수파베이스(Supabase) 서버의 실시간 데이터를 기반으로 자동 분류한 결과입니다.
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="metric-label">누적 접수</div>
+                    <div id="metricTotal" class="metric-value">0</div>
+                </div>
+                <div class="card">
+                    <div class="metric-label">오늘 접수</div>
+                    <div id="metricToday" class="metric-value">0</div>
+                </div>
+                <div class="card">
+                    <div class="metric-label">고위험 건수</div>
+                    <div id="metricHighRisk" class="metric-value">0</div>
+                </div>
+                <div class="card">
+                    <div class="metric-label">답변 요청</div>
+                    <div id="metricNeedReply" class="metric-value">0</div>
+                </div>
+            </div>
+
+            <div class="dashboard-actions">
+                <button class="menu-btn btn-admin" style="background:#e74c3c; color:white; font-weight:bold;" onclick="downloadAIReport()">📊 AI 예방 보고서 다운로드</button>
+                <button class="menu-btn btn-question" onclick="downloadCsv()">CSV 내보내기</button>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">AI 선제 대응 제안</div>
+                <div id="insightList" class="empty-state">데이터가 쌓이면 자동으로 대응 제안이 표시됩니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">지역별 민원 분포</div>
+                <div id="regionStats" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">시간대별 민원 분포</div>
+                <div id="timeStats" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">민원 종류별 분류</div>
+                <div id="typeStats" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">최근 접수 내역</div>
+                <div id="complaintList" class="empty-state">아직 접수된 민원이 없습니다.</div>
+            </div>
+        </div>
+
+        <button class="menu-btn btn-question" onclick="clearDemoData()">
+            데이터 초기화
+        </button>
+
+        <div class="back-btn" onclick="goHome()">← 처음으로</div>
+    </div>
+
+</div>
+
+<script>
+/**
+ * 부산환경공단 AI 민원 예측 시스템 v3.2
+ * (디자인 100% 복구 + 수파베이스 실시간 연동)
+ */
+
+const ADMIN_PASSWORD = '7777';
+const SUPABASE_URL = 'https://epzhhgavlxixtjbbmaxt.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwemhoZ2F2bHhpeHRqYmJtYXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2NTE3OTEsImV4cCI6MjA5MjIyNzc5MX0.a2B5S4rdWu9bszoGr6WytyT3JkYpLru85FydaltBfz0';
+
+// 1. 화면 전환 및 기본 UI 기능
+function switchView(viewId) {
+    const pages = ['home', 'videoPage', 'questionPage', 'dashboardPage'];
+    pages.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.display = (id === viewId) ? 'block' : 'none';
+            if (id === viewId) el.classList.add('active');
+            else el.classList.remove('active');
+        }
+    });
+}
+
+function playVideo(file, title) {
+    switchView('videoPage');
+    const player = document.getElementById('player');
+    if (player) {
+        player.src = file;
+        player.play().catch(() => {});
+    }
+    const titleEl = document.getElementById('videoTitle');
+    if (titleEl) titleEl.innerText = title || "";
+}
+
+function goHome() {
+    switchView('home');
+    const player = document.getElementById('player');
+    if (player) {
+        player.pause();
+        player.src = '';
+    }
+}
+
+function goQuestionPage() { switchView('questionPage'); }
+function goHomeFromQuestion() { switchView('home'); }
+
+async function goDashboard() {
+    await renderDashboard();
+    switchView('dashboardPage');
+}
+
+function openAdminLogin() {
+    const pw = prompt('관리자 비밀번호를 입력해주세요.');
+    if (pw === ADMIN_PASSWORD) goDashboard();
+    else if (pw !== null) alert('비밀번호가 틀렸습니다.');
+}
+
+function toggleContactFields() {
+    const selected = document.querySelector('input[name="replyType"]:checked');
+    const contactFields = document.getElementById('contactFields');
+    if (contactFields) contactFields.style.display = (selected && selected.value === 'reply') ? 'block' : 'none';
+}
+
+function showSelectedFileName() {
+    const file = document.getElementById('photoInput').files[0];
+    const nameEl = document.getElementById('fileName');
+    if (nameEl) nameEl.innerText = file ? '첨부된 사진: ' + file.name : '선택된 사진이 없습니다.';
+}
+
+// 2. 수파베이스 실시간 데이터 연동 (표준 연결 방식 적용)
+async function fetchComplaints() {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/complaints?select=*`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Supabase Error:", errorText);
+            throw new Error('Supabase fetch failed');
+        }
+        const data = await response.json();
+        console.log("Fetched Data:", data); // 브라우저 콘솔에서 확인 가능
+        return data || [];
+    } catch (e) {
+        console.error("데이터 로딩 오류:", e);
+        return [];
+    }
+}
+
+// 3. AI 분석 및 분류 헬퍼 함수
+function classifyComplaintType(text, facility) {
+    const content = (text + ' ' + (facility || '')).toLowerCase();
+    if (content.includes('냄새') || content.includes('악취') || content.includes('매연')) return '악취/대기';
+    if (content.includes('소음') || content.includes('시끄') || content.includes('진동')) return '소음/진동';
+    if (content.includes('하수') || content.includes('오수') || content.includes('물')) return '하수/수질';
+    if (content.includes('쓰레기') || content.includes('폐기물') || content.includes('소각')) return '폐기물/소각';
+    if (content.includes('안전') || content.includes('위험') || content.includes('불안')) return '안전/위험';
+    return '일반 문의';
+}
+
+function evaluateRisk(type, text) {
+    if (!text) return '보통';
+    const content = text.toLowerCase();
+    const highKeywords = ['긴급', '심각', '위험', '죽겠', '악취', '소음', '진동', '짜증', '스트레스', '냄새', '너무'];
+    if (type === '안전/위험' || highKeywords.some(k => content.includes(k))) return '높음';
+    if (type === '악취/대기' || type === '하수/수질') return '중간';
+    return '보통';
+}
+
+function inferRegion(lat, lng) {
+    if (lat == null || lng == null) return '위치 미확인';
+    if (lat > 35.23) return '북부권';
+    if (lng < 129.09) return '서부권';
+    return '동부권';
+}
+
+function getTimeBand(dateStr) {
+    if (!dateStr) return '미정';
+    const hour = new Date(dateStr).getHours();
+    if (hour >= 5 && hour < 9) return '이른 아침';
+    if (hour >= 9 && hour < 12) return '오전';
+    if (hour >= 12 && hour < 18) return '오후';
+    if (hour >= 18 && hour < 22) return '저녁';
+    return '심야';
+}
+
+// 4. 대시보드 렌더링
+async function renderDashboard() {
+    const data = await fetchComplaints();
+    const today = new Date().toDateString();
+
+    document.getElementById('metricTotal').innerText = data.length;
+    
+    // 오늘 접수 건수 필터링 (컬럼명 대응)
+    const todayItems = data.filter(i => {
+        const d = i.created_at || i.createdAt;
+        return d && new Date(d).toDateString() === today;
+    });
+    document.getElementById('metricToday').innerText = todayItems.length;
+    
+    // 고위험 및 답변 요청 건수
+    const highRiskItems = data.filter(i => {
+        const type = i.complaint_type || i.complaintType || classifyComplaintType(i.question, i.facility);
+        return (i.risk_level || i.riskLevel || evaluateRisk(type, i.question)) === '높음';
+    });
+    document.getElementById('metricHighRisk').innerText = highRiskItems.length;
+    
+    const needReplyItems = data.filter(i => (i.reply_type || i.replyType) === 'reply');
+    document.getElementById('metricNeedReply').innerText = needReplyItems.length;
+
+    const stats = { reg: {}, time: {}, type: {} };
+    data.forEach(i => {
+        const r = i.region || inferRegion(i.lat, i.lng);
+        const t = i.time_band || i.timeBand || getTimeBand(i.created_at || i.createdAt);
+        const tp = i.complaint_type || i.complaintType || classifyComplaintType(i.question, i.facility);
+        stats.reg[r] = (stats.reg[r] || 0) + 1;
+        stats.time[t] = (stats.time[t] || 0) + 1;
+        stats.type[tp] = (stats.type[tp] || 0) + 1;
+    });
+
+    const renderRows = (id, obj) => {
+        const el = document.getElementById(id);
+        const sorted = Object.entries(obj).sort((a,b)=>b[1]-a[1]);
+        const tot = data.length || 1;
+        el.innerHTML = sorted.length ? sorted.map(([k,v]) => `
+            <div class="list-row">
+                <div style="min-width: 82px;">${k}</div>
+                <div class="bar-wrap"><div class="bar" style="width: ${(v/tot)*100}%"></div></div>
+                <div>${v}건</div>
+            </div>
+        `).join('') : '<div class="empty-state">데이터가 없습니다.</div>';
+    };
+    renderRows('regionStats', stats.reg);
+    renderRows('timeStats', stats.time);
+    renderRows('typeStats', stats.type);
+
+    document.getElementById('complaintList').innerHTML = data.slice(0, 10).map(i => `
+        <div class="complaint-item">
+            <div class="complaint-head">
+                <div class="complaint-title">${i.complaintType || classifyComplaintType(i.question, i.facility)}</div>
+                <div class="tag">${i.riskLevel || evaluateRisk('', i.question)}</div>
+            </div>
+            <div class="small">${new Date(i.created_at || i.createdAt).toLocaleString()} · ${i.region || inferRegion(i.lat, i.lng)}</div>
+            <div style="margin-top:8px;">${i.question}</div>
+        </div>
+    `).join('') || '<div class="empty-state">내역이 없습니다.</div>';
+
+    const topType = Object.keys(stats.type).sort((a,b)=>stats.type[b]-stats.type[a])[0];
+    document.getElementById('insightList').innerHTML = topType ? `
+        <div class="list-row"><div>💡 최근 <strong>${topType}</strong> 관련 민원이 가장 많이 발생하고 있습니다. 사전 점검을 강화해 주세요.</div></div>
+    ` : '<div class="empty-state">데이터 대기 중...</div>';
+}
+
+// 5. 민원 제출 (사진 업로드 기능 포함)
+async function submitQuestion() {
+    const q = document.getElementById('question').value.trim();
+    if (!q) return alert('내용을 입력해 주세요.');
+
+    const photoInput = document.getElementById('photoInput');
+    const file = photoInput.files[0];
+    let photoName = '';
+
+    if (file) {
+        photoName = `${Date.now()}_${Math.random().toString(36).substr(2,9)}_${file.name}`;
+        try {
+            const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/photos/${photoName}`, {
+                method: 'POST',
+                headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+                body: file
+            });
+            if (!uploadRes.ok) console.error('Photo upload failed');
+        } catch(e) { console.error('Photo upload error:', e); }
+    }
+
+    const body = {
+        reply_type: document.querySelector('input[name="replyType"]:checked').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        facility: document.getElementById('facility').value,
+        question: q,
+        photo_name: photoName,
+        status: '접수'
+    };
+
+    const send = async (la=null, ln=null) => {
+        try {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/complaints`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({...body, lat:la, lng:ln})
+            });
+            if (res.ok) { 
+                alert('정상적으로 접수되었습니다. 감사합니다.'); 
+                goHome(); 
+                document.getElementById('question').value = '';
+                document.getElementById('photoInput').value = '';
+                document.getElementById('fileName').innerText = '선택된 사진 없음';
+            }
+        } catch(e) { alert('접수 중 오류 발생'); }
+    };
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(p => send(p.coords.latitude, p.coords.longitude), () => send());
+    } else { send(); }
+}
+
+// 6. AI 보고서 및 CSV
+async function downloadAIReport() {
+    alert('실시간 데이터를 분석하여 보고서를 생성합니다...');
+    const data = await fetchComplaints();
+    if (!data.length) return alert('분석할 데이터가 없습니다.');
+
+    const types = {}; data.forEach(i => { const t = classifyComplaintType(i.question, i.facility); types[t] = (types[t]||0)+1; });
+    const today = new Date().toISOString().split('T')[0];
+    
+    const html = `
+    <html>
+    <head>
+        <title>AI 민원 보고서</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"><\/script>
+        <style>
+            body { font-family: sans-serif; padding: 40px; background: #f8fafc; }
+            .card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
+            h1 { color: #1e3a8a; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <h1>📊 AI 민원 사전예방 보고서</h1>
+            <p>생성일자: ${today}</p>
+            <p>총 민원 건수: <strong>${data.length}건</strong></p>
+            <div style="height:400px;"><canvas id="chart"></canvas></div>
+        </div>
+        <script>
+            new Chart(document.getElementById('chart'), {
+                type: 'bar',
+                data: { labels: ${JSON.stringify(Object.keys(types))}, datasets: [{ label: '민원 수', data: ${JSON.stringify(Object.values(types))}, backgroundColor: '#3b82f6' }] },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        <\/script>
+    </body>
+    </html>`;
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([html], {type:'text/html'})); a.download=`BECO_AI_Report_${today}.html`; a.click();
+}
+
+function downloadCsv() {
+    fetchComplaints().then(data => {
+        if (!data.length) return;
+        const csv = "\uFEFF일시,시설,내용\n" + data.map(i => `${i.created_at},${i.facility},"${i.question}"`).join("\n");
+        const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'complaints.csv'; a.click();
+    });
+}
+
+function clearDemoData() { if(confirm('데이터를 초기화하시겠습니까? (서버 데이터는 유지됩니다)')) renderDashboard(); }
+
+toggleContactFields();
+renderDashboard();
+</script>
+</body>
+</html>
